@@ -24,7 +24,13 @@ food_shaurma = Food.objects.create(name='shaurma',start_price=50)
 food_gamburger = Food.objects.create(name='gamburger',start_price=25)
 
 
-order1 = Order.objects.create(food=Food(id=1),ingridient = Ingridient((ingridients_beef),(ingridients_chicken)), client=client1, worker=worker1)
+food_shaurma.orders.set([ingridients_beef, ingridients_chees, ingridients_salad,ingridients_free], through_defaults={'client':client1, 'worker':worker1})
+shaurma_price = food_shaurma.start_price + ingridients_beef.extra_price + ingridients_chees.extra_price + ingridients_salad.extra_price + ingridients_free.extra_price
+print(shaurma_price)
+
+food_gamburger.orders.set([ingridients_chicken, ingridients_salad], through_defaults={'client':client1, 'worker':worker1})
+gamburger_price = food_gamburger.start_price + ingridients_chicken.extra_price + ingridients_salad.extra_price
+print(gamburger_price)
 
 # client = Азат у Алтынай: shaurma + beef + chees + salad + free
 #                         gamburger + chicken + salad

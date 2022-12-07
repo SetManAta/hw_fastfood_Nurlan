@@ -28,14 +28,24 @@ class Ingridient(models.Model):
     name = models.CharField(max_length=20)
     extra_price = models.IntegerField()
 
+    def __str__(self):
+        return self.name
+    
+
 class Food(models.Model):
     name = models.CharField(max_length=20)
     start_price = models.IntegerField()
+    orders = models.ManyToManyField(Ingridient, related_name='food', through='Order')
+
+    
 
 class Order(models.Model):
     food = models.ForeignKey(Food, on_delete=models.CASCADE)
-    ingridient = models.ManyToManyField(Ingridient)
+    ingridient = models.ForeignKey(Ingridient,on_delete=models.CASCADE)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     worker = models.ForeignKey(Worker,on_delete=models.CASCADE)
     order_date_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.food.name} - {self.ingridient.name} - {self.client.name} - {self.worker.name}'
 
