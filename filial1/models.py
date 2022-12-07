@@ -14,12 +14,19 @@ class Client(User):
     name = models.CharField(max_length=20)
     card_number = models.IntegerField()
 
+    def __str__(self):
+        return self.name
+    
+
     class Meta(User.Meta):
         pass
 
 class Worker(User):
     name = models.CharField(max_length=20)
     position = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
 
     class Meta(User.Meta):
         pass
@@ -36,6 +43,10 @@ class Food(models.Model):
     name = models.CharField(max_length=20)
     start_price = models.IntegerField()
     orders = models.ManyToManyField(Ingridient, related_name='food', through='Order')
+
+    def __str__(self):
+        return self.name
+    
 
     
 
